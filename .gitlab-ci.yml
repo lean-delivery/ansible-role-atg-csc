@@ -1,0 +1,60 @@
+---
+# Run all tests
+stages:
+  - lint
+  - Deployment test
+
+# Check OS, ansible, molecule, docker version
+before_script:
+  - ansible --version
+  - molecule --version
+
+variables:
+  GET_SOURCES_ATTEMPTS: "5"
+  ANSIBLE_INVENTORY: "/home/gitlab-runner/.local/lib/python2.7/site-packages/epam_ansible/inventory/epc.py"
+  ANSIBLE_LIBRARY: "/home/gitlab-runner/.local/lib/python2.7/site-packages/epam_ansible"
+  ANSIBLE_INVENTORY_PLUGINS: "/home/gitlab-runner/.local/lib/python2.7/site-packages/epam_ansible/inventory/epc.py"
+
+# Tests for EPC driver for CSC 11.3
+.EPC atg-csc 11.3:
+  variables:
+    EPC_REGION: EPAM-BY2
+  stage: Deployment test
+  script:
+    - molecule test -s cloud-epc
+  tags:
+    - delegated
+
+# Tests for AWS driver for CSC 11.3
+.AWS atg-platform 11.3:
+  variables:
+    EPC_REGION: AWS-EUCENTRAL
+  stage: Deployment test
+  script:
+    - molecule test -s cloud-aws
+  tags:
+    - delegated
+
+# Tests for Docker driver for CSC 13
+Docker atg-csc 11.3:
+  stage: Deployment test
+  script:
+    - molecule test -s docker-13
+  tags:
+    - docker
+
+# Tests for Docker driver for CSC 11.1
+Docker atg-csc 11.1:
+  stage: Deployment test
+  script:
+    - molecule test -s docker-11.1
+  tags:
+    - docker
+
+# Tests for Docker driver for CSC 10.2
+Docker atg-csc 10.2:
+  stage: Deployment test
+  script:
+    - molecule test -s docker-10.2
+  tags:
+    - docker

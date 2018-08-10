@@ -1,0 +1,3 @@
+---
+# ATG CSC configXMLproperties.txt
+csc_config_properties_txt: "{{ dynamo_root }}/Service{{ csc_version }}/installconfig/configXMLproperties.txt"

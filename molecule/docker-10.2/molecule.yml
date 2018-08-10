@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/yamllint.yml
+platforms:
+  - name: test-atg-csc-10.2
+    image: centos:6
+    privileged: True
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: docker-10.2
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

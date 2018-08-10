@@ -1,0 +1,15 @@
+---
+- name: "Read content of {{ csc_config_properties_txt }}"
+  slurp:
+    src: "{{ csc_config_properties_txt }}"
+  register: remote_conf
+
+- name: "Set config_properties"
+  set_fact:
+    csc_config_properties: "{{ remote_conf['content'] | b64decode }}"
+
+- name: "Check installed CSC version"
+  set_fact:
+    csc_installed_version: "{{ item.split('=').2 }}"
+  with_items: "{{ csc_config_properties.splitlines() }}"
+  when: item.split('=').1 == "Commerce Service Center base"
