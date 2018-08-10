@@ -39,7 +39,7 @@ variables:
 Docker atg-csc 11.3:
   stage: Deployment test
   script:
-    - molecule test -s docker-13
+    - molecule test -s docker-11.3
   tags:
     - docker
 
