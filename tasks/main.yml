@@ -1,7 +1,7 @@
 ---
-- name: "Check {{ csc_config_properties_txt }}"
+- name: "Check {{ csc_config_txt }}"
   stat:
-    path: "{{ csc_config_properties_txt }}"
+    path: "{{ csc_config_txt }}"
   register: csc_conf_props
 
 - name: "Read config file"

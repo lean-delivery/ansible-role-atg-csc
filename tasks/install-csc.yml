@@ -55,5 +55,5 @@
   become_user: "{{ atg_user }}"
   command: "{{ csc_installer_bin }} -i silent -f {{ csc_silent_install.dest }}"
   args:
-    creates: "{{ csc_config_properties_txt }}"
+    creates: "{{ csc_config_txt }}"
   become: True

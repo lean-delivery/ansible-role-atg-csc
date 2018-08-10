@@ -1,7 +1,7 @@
 ---
-- name: "Read content of {{ csc_config_properties_txt }}"
+- name: "Read content of {{ csc_config_txt }}"
   slurp:
-    src: "{{ csc_config_properties_txt }}"
+    src: "{{ csc_config_txt }}"
   register: remote_conf
 
 - name: "Set config_properties"
