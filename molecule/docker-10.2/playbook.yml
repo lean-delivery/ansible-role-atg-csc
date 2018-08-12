@@ -1,7 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  gather_facts: True
   roles:
     - role: lean_delivery.java
     - role: lean_delivery.jboss

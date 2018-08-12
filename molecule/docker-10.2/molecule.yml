@@ -13,15 +13,8 @@ platforms:
   - name: test-atg-csc-10.2
     image: centos:6
     privileged: True
-    capabilities:
-      - SYS_ADMIN
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     groups:
       - atg-csc-10.2
-    tmpfs:
-      - /tmp
-      - /run
 provisioner:
   name: ansible
   config_options:
