@@ -36,7 +36,7 @@ variables:
     - delegated
 
 # Tests for Docker driver for CSC 13
-.Docker atg-csc 11.3:
+Docker atg-csc 11.3:
   stage: Deployment test
   script:
     - molecule test -s docker-11.3
@@ -44,7 +44,7 @@ variables:
     - docker
 
 # Tests for Docker driver for CSC 11.1
-.Docker atg-csc 11.1:
+Docker atg-csc 11.1:
   stage: Deployment test
   script:
     - molecule test -s docker-11.1
@@ -55,6 +55,6 @@ variables:
 Docker atg-csc 10.2:
   stage: Deployment test
   script:
-    - molecule --debug test -s docker-10.2
+    - molecule test -s docker-10.2
   tags:
     - docker
