@@ -26,7 +26,7 @@ EPC atg-csc 11.3:
     - delegated
 
 # Tests for AWS driver for CSC 11.3
-AWS atg-platform 11.3:
+AWS atg-csc 11.3:
   variables:
     EPC_REGION: AWS-EUCENTRAL
   stage: Deployment test
