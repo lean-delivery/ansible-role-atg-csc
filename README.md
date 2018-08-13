@@ -9,14 +9,6 @@ atg_csc
 
 This role installs Oracle ATG Commerce Service Center.   
 
-ATG Commerce Service Center is a customizable and deployable customer service application that enables an agent to perform the following tasks for an ATG Commerce site:   
-
-- Create and manage customer profiles
-- Create and manage orders
-- Issue refunds and exchanges
-- Process returned items
-- Research customer activity
-
 
 Requirements
 --------------
