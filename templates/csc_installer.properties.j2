@@ -19,7 +19,7 @@ ES_HOST=\"{{ es_host }}\"
 #Install
 #-------
 
-{% if csc_version|match("^10.") or csc_version|match("^9.") %}
+{% if csc_version is match("^10.") or csc_version is match("^9.") %}
 
 -fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/META-INF/MANIFEST.MF=Yes to All
 -fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/uninstall/.Service{{ csc_version }}_uninstall/Uninstall Oracle ATG Web Commerce Service Applications {{ csc_version }}.lax=Yes to All
