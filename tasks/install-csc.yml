@@ -1,0 +1,59 @@
+---
+- name: "Fetch CSC artifact with {{ transport }} transport"
+  include_tasks: "{{ transport_driver }}"
+  with_first_found:
+    - "fetch/{{ transport }}.yml"
+    - "fetch/unknown-transport.yml"
+  loop_control:
+    loop_var: transport_driver
+
+- name: "Read dynamo_root"
+  stat:
+    path: "{{ dynamo_root }}"
+  register: atg_path
+
+- name: "Get ATG user"
+  set_fact:
+    atg_user: "{{ atg_path.stat.pw_name }}"
+    atg_group: "{{ atg_path.stat.gr_name }}"
+
+- name: "Become section"
+  block:
+    - name: "Install unzip"
+      package:
+        name: "unzip"
+        state: "present"
+
+    - name: "Extract CSC installer"
+      unarchive:
+        src: "{{ csc_artifact }}"
+        dest: "{{ download_path }}"
+        list_files: True
+      register: csc_installer
+
+    - name: "Ensure {{ csc_installer.files[0] }} is executable"
+      file:
+      args:
+        path: "{{ download_path }}/{{ csc_installer.files[0] }}"
+        owner: "{{ atg_user }}"
+        group: "{{ atg_group }}"
+        mode: "0755"
+
+  become: True
+
+- name: "Set csc_installer_bin"
+  set_fact:
+    csc_installer_bin: "{{ download_path }}/{{ csc_installer.files[0] }}"
+
+- name: "Create silent install file for Service{{ csc_version }}"
+  template:
+    src: "csc_installer.properties.j2"
+    dest: "{{ download_path }}/csc_installer_{{ csc_version }}.properties"
+  register: csc_silent_install
+
+- name: "Install Commerce Service Center {{ csc_version }}"
+  become_user: "{{ atg_user }}"
+  command: "{{ csc_installer_bin }} -i silent -f {{ csc_silent_install.dest }}"
+  args:
+    creates: "{{ csc_config_txt }}"
+  become: True

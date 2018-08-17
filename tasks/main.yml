@@ -1,0 +1,13 @@
+---
+- name: "Check {{ csc_config_txt }}"
+  stat:
+    path: "{{ csc_config_txt }}"
+  register: csc_conf_props
+
+- name: "Read config file"
+  include_tasks: "read-csc-conf-props.yml"
+  when: csc_conf_props.stat.exists == True
+
+- name: "Install ATG Commerce Service Center"
+  include_tasks: "install-csc.yml"
+  when: csc_conf_props.stat.exists == False or not csc_version == csc_installed_version

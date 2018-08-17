@@ -1,0 +1,32 @@
+#Choose Product Features
+#-----------------------
+CHOSEN_FEATURE_LIST=Commerc,CSC,WCSCUI
+CHOSEN_INSTALL_FEATURE_LIST=Commerc,CSC,WCSCUI
+CHOSEN_INSTALL_SET=Custom
+
+#Choose Install Folder
+#---------------------
+USER_INSTALL_DIR={{ dynamo_root }}
+
+{% if es_host is defined %}
+
+#Select host for ATG Search
+#--------------------------
+ES_HOST=\"{{ es_host }}\"
+
+{% endif %}
+
+#Install
+#-------
+
+{% if csc_version.split('.')[0] | int <= 10 %}
+
+-fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/META-INF/MANIFEST.MF=Yes to All
+-fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/uninstall/.Service{{ csc_version }}_uninstall/Uninstall Oracle ATG Web Commerce Service Applications {{ csc_version }}.lax=Yes to All
+
+{% else %}
+
+-fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/META-INF/MANIFEST.MF=Yes
+-fileOverwrite_{{ dynamo_root }}/Service{{ csc_version }}/uninstall/.Service{{ csc_version }}_uninstall/Uninstall Oracle Commerce Service Center {{ csc_version }}.lax=Yes
+
+{% endif %}
